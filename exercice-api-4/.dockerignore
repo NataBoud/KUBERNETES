@@ -1,0 +1,17 @@
+# Ne pas copier les modules locaux
+node_modules
+npm-debug.log
+
+# Ne pas copier les fichiers Git
+.git
+.gitignore
+
+# Ne pas copier les fichiers de config Docker eux-mêmes
+Dockerfile
+.dockerignore
+
+# Ne pas copier les secrets locaux
+.env
+
+# Documentation inutile dans l'image
+README.md

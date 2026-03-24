@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-france
+spec:
+  type: NodePort
+  selector:
+    app: nginx-france
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-japan
+spec:
+  type: NodePort
+  selector:
+    app: express-japan
+  ports:
+    - port: 8080       # Port du Service (celui qu'on appelle)
+      targetPort: 3000 # PORT REEL de code Express (index.js)
+      nodePort: 30081  # Port exposé sur le nœud Kind
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-usa
+spec:
+  type: NodePort
+  selector:
+    app: game-usa
+  ports:
+    - port: 80
+      targetPort: 8080 # le port de Tomcat
+      nodePort: 30082

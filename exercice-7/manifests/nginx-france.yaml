@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-france
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-france
+  template:
+    metadata:
+      labels:
+        app: nginx-france
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: country
+                operator: In
+                values: ["france"]
+      containers:
+      - name: nginx
+        image: nginx:alpine

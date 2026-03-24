@@ -1,0 +1,18 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: world-cluster
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.31.0 # Cette version correspond mieux à  outil Kind v0.31
+  - role: worker
+    image: kindest/node:v1.31.0
+    labels:
+      country: france
+  - role: worker
+    image: kindest/node:v1.31.0
+    labels:
+      country: japan
+  - role: worker
+    image: kindest/node:v1.31.0
+    labels:
+      country: usa

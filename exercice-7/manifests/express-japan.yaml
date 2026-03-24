@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-japan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-japan
+  template:
+    metadata:
+      labels:
+        app: express-japan
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: country
+                operator: In
+                values: ["japan"]
+      containers:
+      - name: api
+        image: bounat/node-api:v1 # image Node.js sur docker hub, construite à partir du Dockerfile de l'exercice 4

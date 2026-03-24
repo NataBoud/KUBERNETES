@@ -1,26 +1,37 @@
-# Guide des commandes - Exercice #3
+# Commandes - Exercice #3
 
 ### 1. Préparation
+```bash
 minikube start
+```
 
 ### 2. Déploiement initial
-# On utilise l'image que tu viens d'envoyer sur le cloud
-kubectl create deployment monsite-custom --image=TON_PSEUDO/monsite:v1
+```bash
+kubectl create deployment monsite-custom --image=<psedo-docker>/monsite:v1
+```
 
-### 3. Exposition au monde extérieur
-# On utilise LoadBalancer pour simuler une IP publique
+### 3. Exposition au monde extérieur -LoadBalancer pour simuler une IP publique
+```bash
 kubectl expose deployment monsite-custom --port=80 --type=LoadBalancer
+```
 
 ### 4. Mise à l'échelle (Scaling)
-# On demande à Kubernetes de passer à 3 réplicas (3 instances du site)
+```bash
 kubectl scale deployment monsite-custom --replicas=3
+```
 
-# Vérification : Tu devrais voir 3 Pods "Running"
+# Vérification 
+```bash
 kubectl get pods
+```
 
 ### 5. Accès via le tunnel
-# Dans un terminal séparé
+```bash
 minikube tunnel
+```
 
 # Dans ton terminal principal pour ouvrir le site
+```bash
 minikube service monsite-custom
+```
+

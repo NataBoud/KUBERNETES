@@ -18,7 +18,7 @@ kind load docker-image flask-storage:v1 --name exo-storage
 
 Appliquer :
 ```bash
-kubectl apply -f 1-no-volume.yaml
+kubectl apply -f deployment-no-volume.yaml
 # verifier :
 kubectl get pods
 ```
@@ -42,7 +42,7 @@ Supprime l'ancien déploiement et ses pods associés puis lancer deployment 2
 
 ```bash
 kubectl delete deployment flask-no-volume
-kubectl apply -f 2-empty-dir.yaml
+kubectl apply -f deployment-empty-dir.yaml
 ```
 tester: 
 ```bash
@@ -51,7 +51,7 @@ kubectl port-forward deployment/flask-empty-dir 5000:5000
 ## Étape 3 : host-path
 ```bash
 kubectl delete deployment flask-empty-dir
-kubectl apply -f 3-host-path.yaml
+kubectl apply -f deployment-host-path.yaml
 ```
 
 tester: 
@@ -62,3 +62,38 @@ kubectl delete pod -l app=flask-persistent
 Invoke-RestMethod -Uri "http://localhost:5000/log" -Method Post -Body '{"message": "Persistance HostPath"}' -ContentType "application/json"
 
 ```
+**Sans volume — après un crash (`POST /crash`) :**
+- Le pod redémarre-t-il automatiquement ?
+
+La route semble poser problème, donc non. En théorie, le pod ne redémarre pas, le conteneur oui.
+
+- Les données sont-elles toujours présentes après le redémarrage ?
+
+Non.
+
+**Avec `emptyDir` — après un crash (`POST /crash`) :**
+- Les données sont-elles toujours présentes après le redémarrage du conteneur ?
+
+Non.
+
+**Avec `emptyDir` — après une suppression du pod (`kubectl delete pod …`) :**
+- Un nouveau pod est-il recréé par le Deployment ?
+
+Oui
+
+- Les données sont-elles toujours présentes dans le nouveau pod ?
+
+Non
+
+**Avec `hostPath` — après une suppression du pod (`kubectl delete pod …`) :**
+- Un nouveau pod est-il recréé par le Deployment ?
+
+Oui
+
+- Les données sont-elles toujours présentes dans le nouveau pod ?
+
+C'est aléatoire
+
+- Et si le pod est déployé sur le même noeud via l'utilisation de teintes et de l'affinité ?
+
+Oui

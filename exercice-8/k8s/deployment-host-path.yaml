@@ -12,6 +12,19 @@ spec:
       labels:
         app: flask-persistent
     spec:
+      tolerations:
+        - key: "country"
+          operator: "Equal"
+          value: "france"
+          effect: "NoExecute"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "country"
+                    operator: "In"
+                    values: ["france"]
       volumes:
         - name: log-storage
           hostPath:

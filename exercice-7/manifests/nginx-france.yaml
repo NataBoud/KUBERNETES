@@ -12,6 +12,11 @@ spec:
       labels:
         app: nginx-france
     spec:
+      tolerations:
+      - key: "country"
+        operator: "Equal"
+        value: "france"
+        effect: "NoExecute"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

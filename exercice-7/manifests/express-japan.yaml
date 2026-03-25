@@ -12,9 +12,16 @@ spec:
       labels:
         app: express-japan
     spec:
+    # 1. LA TOLÉRANCE (Le Pass pour passer les barrières de nœuds) permet au Pod de rentrer sur le nœud Japon malgré la Teinte.
+      tolerations:
+      - key: "country"
+        operator: "Equal"
+        value: "japan"
+        effect: "NoExecute"
       affinity:
+        # 2. L'AFFINITÉ (Le choix du nœud sur lequel le Pod doit s'installer) oblige le Pod à aller au Japon (il ne veut pas aller ailleurs).
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
+          requiredDuringSchedulingIgnoredDuringExecution: # signifie que si Kubernetes ne trouve pas de nœud avec le label japan, le Pod refusera de s'installer et restera en attente (Pending).
             nodeSelectorTerms:
             - matchExpressions:
               - key: country

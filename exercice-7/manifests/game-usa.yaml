@@ -12,6 +12,11 @@ spec:
       labels:
         app: game-usa
     spec:
+      tolerations:
+      - key: "country"
+        operator: "Equal"
+        value: "usa"
+        effect: "NoExecute"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

@@ -40,6 +40,7 @@ kubectl delete pod -l app=flask-api
 
 Supprime l'ancien déploiement et ses pods associés puis lancer deployment 2
 
+
 ```bash
 kubectl delete deployment flask-no-volume
 kubectl apply -f deployment-empty-dir.yaml

@@ -21,7 +21,7 @@ nodes:
 kind create cluster --config basic-cluster.yaml
 ```
 
-1. # Verrouiller le nœuds
+### Verrouiller le nœuds
 ```bash
 kubectl taint nodes world-cluster-worker2 country=japan:NoExecute
 kubectl taint nodes world-cluster-worker country=france:NoExecute

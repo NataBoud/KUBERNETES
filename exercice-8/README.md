@@ -14,7 +14,7 @@ kubectl config use-context kind-exo-storage
 ```bash
 kind load docker-image flask-storage:v1 --name exo-storage
 ```
-- Étape 1 : Le Test "SANS VOLUME" 
+## Étape 1 : Le Test "SANS VOLUME" 
 
 Appliquer :
 ```bash
@@ -32,13 +32,14 @@ Invoke-RestMethod -Uri "http://localhost:5000/log" -Method Post -Body '{"message
 Invoke-RestMethod -Uri "http://localhost:5000/log" -Method Get
 Invoke-RestMethod -Uri "http://localhost:5000/crash" -Method Post
 ```
-# Supprime le pod actuel, le Deployment en créera un nouveau tout de suite
+Supprime le pod actuel, le Deployment en créera un nouveau tout de suite
 ```bash
 kubectl delete pod -l app=flask-api
 ```
-Étape 2 : emptyDir
+## Étape 2 : emptyDir
 
 Supprime l'ancien déploiement et ses pods associés puis lancer deployment 2
+
 ```bash
 kubectl delete deployment flask-no-volume
 kubectl apply -f 2-empty-dir.yaml
@@ -47,7 +48,7 @@ tester:
 ```bash
 kubectl port-forward deployment/flask-empty-dir 5000:5000
 ```
-Étape 3 : ehost-path
+## Étape 3 : host-path
 ```bash
 kubectl delete deployment flask-empty-dir
 kubectl apply -f 3-host-path.yaml

@@ -16,7 +16,7 @@ nodes:
     labels:
       country: usa
 ```
-
+### Lancer le claster
 ```bash
 kind create cluster --config basic-cluster.yaml
 ```

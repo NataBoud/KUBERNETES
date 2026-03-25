@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-empty-dir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-storage-safe
+  template:
+    metadata:
+      labels:
+        app: flask-storage-safe
+    spec:
+      volumes:
+        - name: log-storage
+          emptyDir: {} # casier temporaire
+      containers:
+        - name: flask-container
+          image: flask-storage:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: log-storage
+              mountPath: /app/logs # On branche le casier sur le dossier de l'app

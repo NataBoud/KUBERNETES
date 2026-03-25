@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-host-path
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-persistent
+  template:
+    metadata:
+      labels:
+        app: flask-persistent
+    spec:
+      volumes:
+        - name: log-storage
+          hostPath:
+            path: /tmp/k8s-logs  # Dossier REEL sur le nœud Kind
+            type: DirectoryOrCreate
+      containers:
+        - name: flask-container
+          image: flask-storage:v1
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: log-storage
+              mountPath: /app/logs

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-no-volume
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-api
+  template:
+    metadata:
+      labels:
+        app: flask-api
+    spec:
+      containers:
+      - name: flask-container
+        image: flask-storage:v1
+        imagePullPolicy: Never # force l'usage de l'image chargée
+        ports:
+        - containerPort: 5000

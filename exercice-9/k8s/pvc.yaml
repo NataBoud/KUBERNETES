@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: postgres-ns
+spec:
+  storageClassName: "" # Doit être identique au PV
+  volumeName: postgres-pv # On pointe explicitement vers le PV
+  
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

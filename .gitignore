@@ -1,0 +1,9 @@
+# Ignorer les données locales de PostgreSQL
+exercice-9/data/
+
+# Ignorer les fichiers de logs et de configuration temporaires
+*.log
+.DS_Store
+
+# Ignorer les secrets s'ils sont générés localement et ne doivent pas être partagés
+# k8s/secret.yaml

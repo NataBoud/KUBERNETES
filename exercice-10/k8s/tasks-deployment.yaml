@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: tasks-deployment
+  namespace: fullstack-ns
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tasks-api
+
+  template:
+    metadata:
+      labels:
+        app: tasks-api
+    spec:
+      volumes:
+      - name: tasks-storage
+        persistentVolumeClaim:
+          claimName: tasks-pvc
+
+      containers:
+      - name: tasks-container
+        image: bounat/tasks-api:latest
+        imagePullPolicy: IfNotPresent # dit à K8s de regarder en local d'abord
+
+        resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+
+        volumeMounts:
+        - name: tasks-storage
+          mountPath: /app/tasks # On "branche" le PVC ici
+
+        envFrom:
+          - configMapRef:
+              name: auth-access-config
+        env:
+        - name: TASKS_FOLDER
+          value: tasks # Dossier où l'appli va écrire
+
+

@@ -4,10 +4,12 @@ metadata:
   name: postgres-pv
 spec:
   storageClassName: ""
+  
   capacity:
-    storage: 1Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  persistentVolumeClaimPolicy: Retain
   hostPath:
     path: /mnt/data # Doit correspondre au containerPath de kind-config.yaml
     type: DirectoryOrCreate

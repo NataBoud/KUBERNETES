@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-access-config
+  namespace: fullstack-ns
+data:
+  AUTH_ADDRESS: "auth-service.fullstack-ns"

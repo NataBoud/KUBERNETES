@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+  namespace: fullstack-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-api
+  template:
+    metadata:
+      labels:
+        app: auth-api
+    spec:
+      containers:
+      - name: auth-container
+        image: bounat/auth-api:latest
+        imagePullPolicy: IfNotPresent #  dit à K8s de regarder en local d'abord
+
+        resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 80 # On vérifie juste que le serveur "écoute"
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+
+        # readinessProbe:
+        #   httpGet:
+        #     path: /hashed-password/test # On teste une route existante
+        #     port: 80
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 5
+        
+        
+
+        # ports:
+        # - containerPort: 80 
+        # # pour éviter que K8s n'essaie de la télécharger
+        # imagePullPolicy: IfNotPresent
